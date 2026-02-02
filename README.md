@@ -1,17 +1,39 @@
-personal project inspired by Tsoding's video about how simple math can be used for 3d graphics and
-how those same formulas can make a simple yet impressive 3d engine without the use of OpenGL or 
-WebGL;
+The primary goal of this project is to serve as an educational tool for visualizing geometric transformations in 3D space, such as:
 
-the goal here is to expand on the functions made in the video and potentially expand it to a full
-fledged web page, that can be used to draw shapes in a 3D space for educational visuals of motions
-in geometric spaces like:
--translations.
--rotation.
--homothety.
--similarity.
+Translation
 
-while also showing an approximation of where the center of gravity should be, given the coordinates
-and the edges of the shape.
-later plans might include adding the option of weight or density for a more accurate representation
-of the center of gravity.
+Rotation
 
+Homothety (scaling)
+
+Similarity transformations
+
+Rather than prioritizing performance or graphical fidelity, the emphasis is on clarity, mathematical correctness, and understanding the underlying concepts.
+
+Current Features
+
+Basic 3D shape representation using vertices and edges
+
+Simple 3D projection without hardware-accelerated graphics APIs
+
+Mathematical transformations applied directly to vertex data
+
+Approximation of the center of gravity based on vertex coordinates and edge structure
+
+Planned Features
+
+Expansion into a web-based visualization (no WebGL)
+
+Interactive controls for applying transformations
+
+Improved center of gravity calculations
+
+Optional weight or density values for more accurate mass distribution
+
+Use as an educational visual aid for geometric motion and spatial reasoning
+
+Inspiration
+
+Tsoding’s work on minimal, math-first graphics programming
+
+Linear algebra and geometry as the foundation of 3D graphics
