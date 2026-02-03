@@ -1,5 +1,5 @@
 const BACKGROUND = "#101010";
-const FOREGROUND = "#FF0000";
+const FOREGROUND = "#00FFFF";
 
 console.log(game);
 game.width = 800;
@@ -72,6 +72,26 @@ function rotate_xz({x, y, z}, angle){
     };
 }
 
+function rotate_xy({x, y, z}, angle){
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return {
+        x: x*cos - y*sin,
+        y: x*sin + y*cos,
+        z,
+    };
+}
+
+function rotate_yz({x, y , z} , angle){
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return {
+        x, 
+        y: y*cos - z*sin,
+        z: y*sin + z*cos,
+    };
+}
+
 //Cube
 const vs = [
 {x: 0.25, y: 0.25, z: 0.25},
@@ -92,6 +112,15 @@ const fs = [
    [1, 5, 2, 6],
    [2, 6, 3, 7],
    [3, 7, 4, 0],
+]
+
+const fs2 = [
+   [0, 1, 2, 3],
+   [4, 5, 6, 7],
+   [0, 4],
+   [1, 5],
+   [2, 6],
+   [3, 7],
 ]
 
 //Yugioh Card
@@ -154,15 +183,27 @@ function frame(){
     if(centroids.length == 0 ){
         center_of_gravity();
     }
+
     for (const v of centroids){
        point(screen(project(translate_z(rotate_xz(v,angle),dz))));
     }
+
+    //connect centroids
+    //for (const f of fs2){
+    //    for(let i = 0; i < fs2.length; ++i){
+    //        const c = centroids[f[i]];
+    //        const d = centroids[f[(i+1)%fs2.length]];
+    //        line(screen(project(translate_z(rotate_xz(c,angle), dz)))
+    //           ,screen(project(translate_z(rotate_xz(d,angle), dz))));
+    //    }
+    //}
+
     for (const f of fs){
         for(let i = 0; i < f.length; ++i){
             const a = vs[f[i]];
             const b = vs[f[(i+1)%f.length]];
-            line(screen(project(translate_z(rotate_xz(a,angle), dz)))
-               ,screen(project(translate_z(rotate_xz(b,angle), dz))));
+            line(screen(project(translate_z(rotate_yz(a,angle), dz)))
+               ,screen(project(translate_z(rotate_yz(b,angle), dz))));
         }
     }
     setTimeout(frame,1000/FPS);
