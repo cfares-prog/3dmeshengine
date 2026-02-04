@@ -1,5 +1,6 @@
 const BACKGROUND = "#101010";
 const FOREGROUND = "#00FFFF";
+const MAX = 100000000000000;
 
 console.log(game);
 game.width = 800;
@@ -176,36 +177,43 @@ let angle = 0;
 
 function frame(){
     const dt = 1/FPS;
-   // dz += 1 * dt; //Variable responsible for translation
-    angle += Math.PI*dt;
-    clear();
-    //uncomment to highlight vertices
-    if(centroids.length == 0 ){
-        center_of_gravity();
+    if(dz > 5  && dz < 10){
+        dz -= 1 - dt;
+    }
+    else if (dz < 2.5){
+        dz += 1 + dt; //Variable responsible for translaition
     }
 
+    angle += Math.PI*dt;
+    let angle2 = angle/2.5;   
+    clear();
+    //uncomment to highlight vertices
+    //if(centroids.length == 0 ){
+    //    center_of_gravity();
+    //}
+    
     for (const v of centroids){
        point(screen(project(translate_z(rotate_xz(v,angle),dz))));
     }
-
-    //connect centroids
-    //for (const f of fs2){
-    //    for(let i = 0; i < fs2.length; ++i){
-    //        const c = centroids[f[i]];
-    //        const d = centroids[f[(i+1)%fs2.length]];
-    //        line(screen(project(translate_z(rotate_xz(c,angle), dz)))
-    //           ,screen(project(translate_z(rotate_xz(d,angle), dz))));
-    //    }
-    //}
 
     for (const f of fs){
         for(let i = 0; i < f.length; ++i){
             const a = vs[f[i]];
             const b = vs[f[(i+1)%f.length]];
-            line(screen(project(translate_z(rotate_yz(a,angle), dz)))
-               ,screen(project(translate_z(rotate_yz(b,angle), dz))));
+            line(screen(project(translate_z(rotate_yz(rotate_xz(a,angle),angle2), dz)))
+               ,screen(project(translate_z(rotate_yz(rotate_xz(b,angle),angle2), dz))));
         }
     }
+
+    //connect centroids
+    //for (const f1 of fs2){
+    //    for(let i = 0; i < fs2.length; ++i){
+    //        const c = centroids[f1[i]];
+    //        const d = centroids[f1[(i+1)%fs2.length]];
+    //        line(screen(project(translate_z(rotate_xz(c,angle), dz)))
+    //           ,screen(project(translate_z(rotate_xz(d,angle), dz))));
+    //    }
+    //}
     setTimeout(frame,1000/FPS);
 }
 setTimeout(frame,1000/FPS);
